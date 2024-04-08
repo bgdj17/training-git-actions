@@ -1,4 +1,4 @@
-name: Website Deployment
+name: Use reuse
 on:
   # workflow_dispatch
   push:
@@ -65,17 +65,8 @@ jobs:
           name: dist-files
           path: dist
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-files
-      - name: Output contents
-        run: ls
-      - name: Deploy
-        run: echo "Deploying..."
+   needs: build
+   uses: ./.github/workflows/reusable.yml
   report:
     needs: [lint, deploy]
     if: failure()
